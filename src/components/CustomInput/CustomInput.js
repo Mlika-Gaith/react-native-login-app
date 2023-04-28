@@ -9,6 +9,7 @@ const CustomInput = ({value, setValue, placeholder, secureTextEntry}) => {
         style={styles.input}
         value={value}
         onChangeText={setValue}
+        placeholderTextColor={'#e3e3e3'}
         // for password typing to be hidden
         secureTextEntry={secureTextEntry}
       />
