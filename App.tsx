@@ -3,11 +3,11 @@ import {
   SafeAreaView,
   StatusBar,
   StyleSheet,
-  Text,
   useColorScheme,
 } from 'react-native';
 
 import {Colors} from 'react-native/Libraries/NewAppScreen';
+import SignInScreen from './src/screens/SignInScreen';
 
 const App = () => {
   const isDarkMode = useColorScheme() === 'dark';
@@ -22,7 +22,7 @@ const App = () => {
         barStyle={isDarkMode ? 'light-content' : 'dark-content'}
         backgroundColor={backgroundStyle.backgroundColor}
       />
-      <Text>Hello World !!</Text>
+      <SignInScreen />
     </SafeAreaView>
   );
 };
@@ -30,6 +30,7 @@ const App = () => {
 const styles = StyleSheet.create({
   root: {
     flex: 1,
+    backgroundColor: '`#F9FBFC`',
   },
 });
 
