@@ -37,6 +37,11 @@ const styles = StyleSheet.create({
   container_PRIMARY: {
     backgroundColor: '#3B71F3',
   },
+  // SECONDARY BUTTON
+  container_SECONDARY: {
+    borderColor: '#3B71F3',
+    borderWidth: 2,
+  },
   // TERTIARY BUTTON
   container_TERTIARY: {},
 
@@ -45,6 +50,9 @@ const styles = StyleSheet.create({
     color: 'white',
   },
   text_TERTIARY: {
+    color: 'gray',
+  },
+  text_SECONDARY: {
     color: 'gray',
   },
 });
