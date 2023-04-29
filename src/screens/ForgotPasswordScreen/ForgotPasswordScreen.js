@@ -3,29 +3,20 @@ import React, {useState} from 'react';
 import CustomInput from '../../components/CustomInput';
 import CustomButton from '../../components/CustomButton';
 
-const ConfirmEmailScreen = () => {
+const ForgotPasswordScreen = () => {
   const [code, setCode] = useState('');
   const onConfirmPressed = () => {};
 
   return (
     <ScrollView showsVerticalScrollIndicator={false} style={styles.scroll}>
       <View style={styles.root}>
-        <Text style={styles.title}>Confirm your Email</Text>
-        <CustomInput
-          placeholder="Confirmation Code"
-          value={code}
-          setValue={setCode}
-        />
-        <CustomButton onPress={onConfirmPressed} text={'Confirm'} />
-        <CustomButton
-          onPress={onConfirmPressed}
-          text={'Resend Code'}
-          type="SECONDARY"
-        />
+        <Text style={styles.title}>Reset your Password</Text>
+        <CustomInput placeholder="Username" value={code} setValue={setCode} />
+        <CustomButton onPress={onConfirmPressed} text={'Send'} />
         <CustomButton
           onPress={onConfirmPressed}
           text={'Back to Sign in'}
-          type="SECONDARY"
+          type="TERTIARY"
         />
       </View>
     </ScrollView>
@@ -59,4 +50,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ConfirmEmailScreen;
+export default ForgotPasswordScreen;
