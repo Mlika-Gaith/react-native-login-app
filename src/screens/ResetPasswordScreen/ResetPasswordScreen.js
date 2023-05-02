@@ -1,13 +1,14 @@
+/* eslint-disable react/react-in-jsx-scope */
 import {View, StyleSheet, ScrollView, Text} from 'react-native';
-import React, {useState} from 'react';
 import CustomInput from '../../components/CustomInput';
 import CustomButton from '../../components/CustomButton';
 import {useNavigation} from '@react-navigation/native';
+import {useForm} from 'react-hook-form';
 
 const ResetPasswordScreen = () => {
-  navigation = useNavigation();
-  const [code, setCode] = useState('');
-  const [newPassword, setNewPassword] = useState('');
+  const navigation = useNavigation();
+  const {control, handleSubmit, watch} = useForm();
+  let pwd = watch('password');
   const onConfirmPressed = () => {
     navigation.navigate('Home');
   };
@@ -21,15 +22,38 @@ const ResetPasswordScreen = () => {
         <Text style={styles.title}>Reset your Password</Text>
         <CustomInput
           placeholder="Confirmation Code"
-          value={code}
-          setValue={setCode}
+          control={control}
+          name="code"
+          rules={{
+            required: 'Confirmation code is required',
+          }}
         />
         <CustomInput
           placeholder="New Password"
-          value={newPassword}
-          setValue={setNewPassword}
+          control={control}
+          name={'password'}
+          secureTextEntry={true}
+          rules={{
+            required: 'Password is required',
+            minLength: {
+              value: 8,
+              message: 'Password must be at least 8 characters long',
+            },
+          }}
         />
-        <CustomButton onPress={onConfirmPressed} text={'Confirm'} />
+        <CustomInput
+          placeholder="Confirm Password"
+          control={control}
+          name={'confirm-password'}
+          secureTextEntry={true}
+          rules={{
+            validate: value => value === pwd || "Passwords don't match",
+          }}
+        />
+        <CustomButton
+          onPress={handleSubmit(onConfirmPressed)}
+          text={'Confirm'}
+        />
         <CustomButton
           onPress={onSignInPressed}
           text={'Back to Sign in'}

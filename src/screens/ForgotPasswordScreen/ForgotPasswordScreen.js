@@ -1,13 +1,14 @@
+/* eslint-disable react/react-in-jsx-scope */
 import {View, StyleSheet, ScrollView, Text} from 'react-native';
-import React, {useState} from 'react';
 import CustomInput from '../../components/CustomInput';
 import CustomButton from '../../components/CustomButton';
 
 import {useNavigation} from '@react-navigation/native';
+import {useForm} from 'react-hook-form';
 
 const ForgotPasswordScreen = () => {
-  navigation = useNavigation();
-  const [code, setCode] = useState('');
+  const navigation = useNavigation();
+  const {control, handleSubmit} = useForm();
   const onConfirmPressed = () => {
     navigation.navigate('ResetPassword');
   };
@@ -19,8 +20,23 @@ const ForgotPasswordScreen = () => {
     <ScrollView showsVerticalScrollIndicator={false} style={styles.scroll}>
       <View style={styles.root}>
         <Text style={styles.title}>Reset your Password</Text>
-        <CustomInput placeholder="Username" value={code} setValue={setCode} />
-        <CustomButton onPress={onConfirmPressed} text={'Send'} />
+        <CustomInput
+          placeholder="Username"
+          control={control}
+          name="username"
+          rules={{
+            required: 'Username is required',
+            minLength: {
+              value: 3,
+              message: 'Username must be at least 3 characters long.',
+            },
+            maxLength: {
+              value: 15,
+              message: 'Username must be at max 15 characters long.',
+            },
+          }}
+        />
+        <CustomButton onPress={handleSubmit(onConfirmPressed)} text={'Send'} />
         <CustomButton
           onPress={onSignInPressed}
           text={'Back to Sign in'}

@@ -1,3 +1,4 @@
+/* eslint-disable react/react-in-jsx-scope */
 import {
   View,
   Image,
@@ -5,22 +6,27 @@ import {
   useWindowDimensions,
   ScrollView,
 } from 'react-native';
-import React, {useState} from 'react';
 import Logo from '../../../assets/images/dev-logo.png';
 import CustomInput from '../../components/CustomInput';
 import CustomButton from '../../components/CustomButton';
 import SocialSignInButtons from '../../components/SocialSignInButtons';
 
 import {useNavigation} from '@react-navigation/native';
+import {useForm} from 'react-hook-form';
 
 const SignInScreen = () => {
   const navigation = useNavigation();
   const {height} = useWindowDimensions();
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const onSignInPressed = () => {
+  // handleSubmit makes sure our form fields are all valid
+  const {
+    control,
+    handleSubmit,
+    formState: {errors},
+  } = useForm();
+  const onSignInPressed = data => {
     // validate user
-    navigation.navigate('Home');
+    console.log(data);
+    //navigation.navigate('Home');
   };
   const onForgotPassword = () => {
     navigation.navigate('ForgotPassword');
@@ -35,16 +41,28 @@ const SignInScreen = () => {
         <Image source={Logo} style={[styles.logo, {height: height * 0.3}]} />
         <CustomInput
           placeholder="Username"
-          value={username}
-          setValue={setUsername}
+          control={control}
+          name="username"
+          rules={{required: 'Username is required'}}
         />
         <CustomInput
           placeholder="Password"
-          value={password}
-          setValue={setPassword}
+          control={control}
+          name="password"
           secureTextEntry={true}
+          rules={{
+            required: 'Password is required',
+            minLength: {
+              value: 3,
+              message: 'Password should be minimum 3 characters long',
+            },
+          }}
         />
-        <CustomButton onPress={onSignInPressed} text={'Sign In'} />
+
+        <CustomButton
+          onPress={handleSubmit(onSignInPressed)}
+          text={'Sign In'}
+        />
         <CustomButton
           onPress={onForgotPassword}
           text={'Forgot Password ?'}

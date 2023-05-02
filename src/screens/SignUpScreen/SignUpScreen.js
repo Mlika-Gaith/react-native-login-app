@@ -1,17 +1,25 @@
+/* eslint-disable react/react-in-jsx-scope */
+/* eslint-disable no-useless-escape */
 import {View, StyleSheet, ScrollView, Text} from 'react-native';
-import React, {useState} from 'react';
 import CustomInput from '../../components/CustomInput';
 import CustomButton from '../../components/CustomButton';
 import SocialSignInButtons from '../../components/SocialSignInButtons';
 
 import {useNavigation} from '@react-navigation/native';
+import {useForm} from 'react-hook-form';
 
 const SignUpScreen = () => {
   const navigation = useNavigation();
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const [email, setEmail] = useState('');
-  const [passwordRepeat, setPasswordRepeat] = useState('');
+  const EMAIL_REGEX = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
+  const {control, handleSubmit, watch} = useForm({
+    defaultValues: {
+      // default value for email field input
+      email: 'username@email-domain.com',
+    },
+  });
+  // provide the name of the field to watch
+  // this is for repeat password validation
+  const pwd = watch('password');
 
   const onRegisterPressed = () => {
     // handle backend logic
@@ -33,23 +41,53 @@ const SignUpScreen = () => {
         <Text style={styles.title}>Create an Account</Text>
         <CustomInput
           placeholder="Username"
-          value={username}
-          setValue={setUsername}
+          name={'username'}
+          control={control}
+          rules={{
+            required: 'Username is required',
+            minLength: {
+              value: 5,
+              message: 'Username must be at least 5 characters long',
+            },
+            maxLength: {
+              value: 15,
+              message: 'Username should be max 15 characters',
+            },
+          }}
         />
-        <CustomInput placeholder="Email" value={email} setValue={setEmail} />
+        <CustomInput
+          placeholder="Email"
+          name={'email'}
+          control={control}
+          rules={{pattern: {value: EMAIL_REGEX, message: 'Email is not valid'}}}
+        />
         <CustomInput
           placeholder="Password"
-          value={password}
-          setValue={setPassword}
           secureTextEntry={true}
+          name={'password'}
+          control={control}
+          rules={{
+            required: 'Password is required',
+            minLength: {
+              value: 8,
+              message: 'Password must be at least 8 characters long',
+            },
+          }}
         />
         <CustomInput
           placeholder="Repeat Password"
-          value={passwordRepeat}
-          setValue={setPasswordRepeat}
           secureTextEntry={true}
+          name={'repeatPassword'}
+          control={control}
+          rules={{
+            // you can also use functions for validation
+            validate: value => value === pwd || 'Passwords do not match',
+          }}
         />
-        <CustomButton onPress={onRegisterPressed} text={'Sign Up'} />
+        <CustomButton
+          onPress={handleSubmit(onRegisterPressed)}
+          text={'Sign Up'}
+        />
         <Text style={styles.text}>
           By registering, you confirm that you accept our{' '}
           <Text style={styles.link} onPress={onTermsOfUsePressed}>
