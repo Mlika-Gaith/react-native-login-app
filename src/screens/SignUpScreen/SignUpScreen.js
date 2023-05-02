@@ -4,18 +4,28 @@ import CustomInput from '../../components/CustomInput';
 import CustomButton from '../../components/CustomButton';
 import SocialSignInButtons from '../../components/SocialSignInButtons';
 
+import {useNavigation} from '@react-navigation/native';
+
 const SignUpScreen = () => {
+  const navigation = useNavigation();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [email, setEmail] = useState('');
   const [passwordRepeat, setPasswordRepeat] = useState('');
 
   const onRegisterPressed = () => {
-    console.warn('Sign In');
+    // handle backend logic
+    navigation.navigate('ConfirmEmail');
   };
-  const onTermsOfUsePressed = () => {};
-  const onTermsOfPrivacyPressed = () => {};
-  const onSignInPressed = () => {};
+  const onTermsOfUsePressed = () => {
+    console.log('Terms of Service');
+  };
+  const onTermsOfPrivacyPressed = () => {
+    console.log('Terms of Privacy');
+  };
+  const onSignInPressed = () => {
+    navigation.navigate('SignIn');
+  };
 
   return (
     <ScrollView showsVerticalScrollIndicator={false} style={styles.scroll}>

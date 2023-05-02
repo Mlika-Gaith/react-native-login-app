@@ -3,9 +3,17 @@ import React, {useState} from 'react';
 import CustomInput from '../../components/CustomInput';
 import CustomButton from '../../components/CustomButton';
 
+import {useNavigation} from '@react-navigation/native';
+
 const ForgotPasswordScreen = () => {
+  navigation = useNavigation();
   const [code, setCode] = useState('');
-  const onConfirmPressed = () => {};
+  const onConfirmPressed = () => {
+    navigation.navigate('ResetPassword');
+  };
+  const onSignInPressed = () => {
+    navigation.navigate('SignIn');
+  };
 
   return (
     <ScrollView showsVerticalScrollIndicator={false} style={styles.scroll}>
@@ -14,7 +22,7 @@ const ForgotPasswordScreen = () => {
         <CustomInput placeholder="Username" value={code} setValue={setCode} />
         <CustomButton onPress={onConfirmPressed} text={'Send'} />
         <CustomButton
-          onPress={onConfirmPressed}
+          onPress={onSignInPressed}
           text={'Back to Sign in'}
           type="TERTIARY"
         />

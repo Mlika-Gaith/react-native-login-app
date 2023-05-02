@@ -7,11 +7,7 @@ import {
 } from 'react-native';
 
 import {Colors} from 'react-native/Libraries/NewAppScreen';
-import SignInScreen from './src/screens/SignInScreen';
-import SignUpScreen from './src/screens/SignUpScreen';
-import ConfirmEmailScreen from './src/screens/ConfirmEmailScreen';
-import ForgotPasswordScreen from './src/screens/ForgotPasswordScreen';
-import ResetPasswordScreen from './src/screens/ResetPasswordScreen';
+import Navigation from './src/navigation';
 
 const App = () => {
   const isDarkMode = useColorScheme() === 'dark';
@@ -26,7 +22,7 @@ const App = () => {
         barStyle={isDarkMode ? 'light-content' : 'dark-content'}
         backgroundColor={backgroundStyle.backgroundColor}
       />
-      <ResetPasswordScreen />
+      <Navigation />
     </SafeAreaView>
   );
 };

@@ -11,15 +11,24 @@ import CustomInput from '../../components/CustomInput';
 import CustomButton from '../../components/CustomButton';
 import SocialSignInButtons from '../../components/SocialSignInButtons';
 
+import {useNavigation} from '@react-navigation/native';
+
 const SignInScreen = () => {
+  const navigation = useNavigation();
   const {height} = useWindowDimensions();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const onSignInPressed = () => {
-    console.warn('Sign In');
+    // validate user
+    navigation.navigate('Home');
   };
-  const onForgotPassword = () => {};
-  const onSignUpPressed = () => {};
+  const onForgotPassword = () => {
+    navigation.navigate('ForgotPassword');
+  };
+  const onSignUpPressed = () => {
+    navigation.navigate('SignUp');
+  };
+
   return (
     <ScrollView showsVerticalScrollIndicator={false} style={styles.scroll}>
       <View style={styles.root}>
